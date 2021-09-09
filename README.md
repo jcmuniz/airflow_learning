@@ -1,5 +1,5 @@
-# Airflow Learning
-> This repository is used to study Apache Airflow deploy with Kubernetes on Minikube (vm=Docker)
+# Apache Airflow - Learning
+> This repository is used to study about Apache Airflow deployed with Kubernetes on Minikube (driver=Docker)
 
 <code><img height="20" src="https://img.shields.io/badge/Git-F05032?style=plastic&logo=git&logoColor=white"/></code>
 <code><img height="20" src="https://img.shields.io/badge/Python-3776AB?style=plastic&logo=python&logoColor=white"/></code>
@@ -11,25 +11,29 @@
 
 ## Requirements
 
-* docker
-* minikube
-* kubernetes-cli / kubectl
+* docker (https://docs.docker.com/get-docker/)
+* minikube (https://minikube.sigs.k8s.io/docs/start/)
+* kubernetes-cli / kubectl (https://kubernetes.io/docs/tasks/tools/)
 
 ## Deployment setup
 
-Start minikube and dashboard (_optimal_):
+Start minikube:
 
 ```sh
 minikube start --kubernetes-version=v1.21.4
+```
+
+And dashboard (_optimal_):
+```sh
 minikube dashboard
 ```
 
 Apply these deployments following the order:
 
 ```sh
-kubectl apply -f airflow_db_deployment.yaml
-kubectl apply -f airflow_base_deployment.yaml
-kubectl apply -f airflow_workers_deployment.yaml
+kubectl apply -f ./infra/k8s/airflow_db_deployment.yaml
+kubectl apply -f ./infra/k8s/airflow_base_deployment.yaml
+kubectl apply -f ./infra/k8s/airflow_workers_deployment.yaml
 ```
 
 ## Usage
@@ -40,10 +44,11 @@ To enter Apache Airflow UI, just run the follow command and start to develop you
 minikube service airflow
 ```
 
-Or you can run a port-forward after get the podName and access using http://localhost:8080 :
+Or you can do a port-forward after get the podName of airflow-base and access using http://localhost:8080 :
 
 ```sh
-kubectl port-forward _podName_ 8080:8080
+kubectl get pods
+kubectl port-forward <podName> 8080:8080
 ```
 
 ## Monitoring the workers
@@ -57,7 +62,8 @@ minikube service flower
 You can do the same step used in port-forward above and access using http://localhost:5555 :
 
 ```sh
-- kubectl port-forward airflow-base-<hash> 5555:5555
+kubectl get pods
+kubectl port-forward <podName> 5555:5555
 ```
 
 ## About Me
