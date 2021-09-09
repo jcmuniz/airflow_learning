@@ -19,39 +19,35 @@ spec:
     
       - name: airflow
         image: julianomuniz/airflow:2.1.3
-        env:
-          - name: AIRFLOW__CORE__EXECUTOR
-            value: 'CeleryExecutor'
-          - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
-            value: 'postgresql+psycopg2://airflow:airflow@airflow-db-service/airflow'
-          - name: AIRFLOW__CELERY__RESULT_BACKEND
-            value: 'db+postgresql://airflow:airflow@airflow-db-service/airflow'
-          - name: AIRFLOW__CELERY__BROKER_URL
-            value: 'redis://:airflow@airflow-db-service:6379/0'
-          - name: AIRFLOW__CORE__FERNET_KEY
-            value: 'GQfGmdgZR52xP8D5XQkGBw6EEFOMjfcL3BA59l1GXws='
-          - name: AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION
-            value: 'true'
-          - name: AIRFLOW__CORE__LOAD_EXAMPLES
-            value: 'true'
-          - name: AIRFLOW__API__AUTH_BACKEND
-            value: 'airflow.api.auth.backend.basic_auth'
-          - name: _AIRFLOW_WWW_USER_USERNAME
-            value: 'airflow'
-          - name: _AIRFLOW_WWW_USER_PASSWORD
-            value: 'airflow'
-          - name: _AIRFLOW_DB_UPGRADE
-            value: 'true'
-          - name: _AIRFLOW_WWW_USER_CREATE
-            value: 'true'
+        envFrom:
+          - configMapRef:
+              name: airflow-env-config
         ports:
           - containerPort: 8080
         args: ['webserver']
-        #command:
-        #  - 'airflow db init'
-        #  - 'airflow webserver'
 
 ---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: airflow-env-config
+data:
+  AIRFLOW__CORE__EXECUTOR: 'CeleryExecutor'
+  AIRFLOW__CORE__SQL_ALCHEMY_CONN: 'postgresql+psycopg2://airflow:airflow@airflow-db-service/airflow'
+  AIRFLOW__CELERY__RESULT_BACKEND: 'db+postgresql://airflow:airflow@airflow-db-service/airflow'
+  AIRFLOW__CELERY__BROKER_URL: 'redis://:airflow@airflow-db-service:6379/0'
+  AIRFLOW__CORE__FERNET_KEY: 'GQfGmdgZR52xP8D5XQkGBw6EEFOMjfcL3BA59l1GXws='
+  AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+  AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
+  AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
+  _AIRFLOW_WWW_USER_USERNAME: 'airflow'
+  _AIRFLOW_WWW_USER_PASSWORD: 'airflow'
+  _AIRFLOW_DB_UPGRADE: 'true'
+  _AIRFLOW_WWW_USER_CREATE: 'true'
+
+---
+
 apiVersion: v1
 kind: Service
 metadata:
