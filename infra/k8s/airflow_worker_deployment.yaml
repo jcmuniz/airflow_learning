@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airflow-worker
+  labels:
+    app: airflowWorker
+spec:
+  selector:
+    matchLabels:
+      app: airflowWorker
+  replicas: 3
+  template:
+    metadata:
+      name: airflowWorker-pod
+      labels:
+        app: airflowWorker
+    spec:
+      containers:
+    
+      - name: airflow-worker
+        image: julianomuniz/airflow:2.1.3
+        envFrom:
+          - configMapRef:
+              name: airflow-env-config
+        ports:
+          - containerPort: 8793
+        args: ['celery','worker']
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: airflow-worker
+  labels:
+    app: airflowWorker
+spec:
+  selector:
+    app: airflowWorker
+  ports:
+    - name: airflow-worker
+      protocol: TCP
+      port: 8793
+      targetPort: 8793

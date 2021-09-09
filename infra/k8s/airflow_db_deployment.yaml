@@ -1,8 +1,7 @@
-# minikube start --mount-string="/Users/jmuniz/JM/Projetos/airflow_learning/data/pgdata:/var/lib/postgresql/data/pgdata"
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: airflow-db-deployment
+  name: airflow-db
   labels:
     app: airflowDB
     type: back-end
@@ -18,18 +17,10 @@ spec:
         app: airflowDB
     spec:
     
-      #volumes:
-      #  - name: psql-pv-storage
-      #    persistentVolumeClaim:
-      #      claimName: db-pv-claim
-
       containers:
 
       - name: redis
         image: redis:6.2.5
-        env:
-          - name: REDIS_PASSWORD
-            value: 'airflow'
         ports:
           - containerPort: 6379
       
@@ -46,16 +37,15 @@ spec:
             value: '/var/lib/postgresql/data/pgdata'
         ports:
           - containerPort: 5432
-        #volumeMounts:
-        #  - mountPath: "/var/lib/postgresql/data/pgdata"
-        #    name: psql-pv-storage
-        #command:
-        #  - "postgres -c listen_addresses=*"
+        
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: airflow-db-service
+  name: redis
+  labels:
+    app: airflowDB
 spec:
   selector:
     app: airflowDB
@@ -64,34 +54,20 @@ spec:
       protocol: TCP
       port: 6379
       targetPort: 6379
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  labels:
+    app: airflowDB
+spec:
+  selector:
+    app: airflowDB
+  ports:
     - name: postgres
       protocol: TCP
       port: 5432
       targetPort: 5432
-# ---
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: psql-pv-volume
-#   labels:
-#     type: local
-# spec:
-#   storageClassName: manual
-#   capacity:
-#     storage: 5Gi
-#   accessModes:
-#     - ReadWriteOnce
-#   hostPath:
-#     path: "/Users/jmuniz/JM/Projetos/airflow_learning/data/pgdata"
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: db-pv-claim
-# spec:
-#   storageClassName: manual
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 2Gi
