@@ -59,7 +59,7 @@ If you would like to monitor the workers, you can run this:
 minikube service flower
 ```
 
-You can do the same step used in port-forward above and access using http://localhost:5555 :
+You can do the same step used in port-forward above and accessing http://localhost:5555 :
 
 ```sh
 kubectl get pods
@@ -69,7 +69,7 @@ kubectl port-forward <podName> 5555:5555
 ## About Me
 
 Juliano Muniz 
-[![Github Badge](https://img.shields.io/badge/-Github-000?style=flat-square&logo=Github&logoColor=white&link=https://github.com/jcmuniz)]
+[![Github Badge](https://img.shields.io/badge/-Github-000?style=flat-square&logo=Github&logoColor=white&link=https://github.com/jcmuniz)](https://github.com/jcmuniz)
 
 
 
