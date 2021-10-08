@@ -2,7 +2,7 @@ apiVersion: "sparkoperator.k8s.io/v1beta2"
 kind: SparkApplication
 metadata:
   name: job-pyspark-{{ macros.datetime.now().strftime("%Y-%m-%d-%H-%M-%S") }}
-  namespace: airflow
+  namespace: airflow-spark-ns
 spec:
   volumes:
     - name: ivy
@@ -35,10 +35,10 @@ spec:
         key: aws_secret_access_key
     cores: 1
     coreLimit: "1200m"
-    memory: "2g"
+    memory: "1g"
     labels:
       version: 3.0.0
-    serviceAccount: airflow-1-1633679699-worker
+    serviceAccount: airflow-worker
     volumeMounts:
       - name: ivy
         mountPath: /tmp
@@ -53,7 +53,7 @@ spec:
     cores: 1
     instances: 2
     coreLimit: "1000m"
-    memory: "2g"
+    memory: "1g"
     labels:
       version: 3.0.0
     volumeMounts:
