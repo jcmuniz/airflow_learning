@@ -38,7 +38,7 @@ spec:
     memory: "2g"
     labels:
       version: 3.0.0
-    serviceAccount: airflow-worker
+    serviceAccount: airflow-1-1633679699-worker
     volumeMounts:
       - name: ivy
         mountPath: /tmp
