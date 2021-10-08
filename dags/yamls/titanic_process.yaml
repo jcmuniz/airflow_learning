@@ -52,6 +52,7 @@ spec:
         key: aws_secret_access_key
     cores: 1
     instances: 2
+    coreLimit: "1000m"
     memory: "2g"
     labels:
       version: 3.0.0
