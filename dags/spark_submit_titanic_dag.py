@@ -16,18 +16,18 @@ with DAG(
     schedule_interval=None,
     start_date=days_ago(1),
     catchup=False,
-    tags=['spark', 'kubernetes', 'batch',],
+    tags=['spark', 'kubernetes', 'batch'],
 ) as dag:
     titanic_process = SparkKubernetesOperator(
         task_id='titanic_process',
-        namespace="airflow",
+        namespace="airflow-spark-ns",
         application_file="yamls/titanic_process.yaml",
         kubernetes_conn_id="kubernetes_default",
         do_xcom_push=True,
     )
     titanic_sensor = SparkKubernetesSensor(
         task_id='titanic_sensor',
-        namespace="airflow",
+        namespace="airflow-spark-ns",
         application_name="{{ task_instance.xcom_pull(task_ids='titanic_process')['metadata']['name'] }}",
         kubernetes_conn_id="kubernetes_default",
     )
