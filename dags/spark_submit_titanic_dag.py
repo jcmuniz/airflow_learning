@@ -30,6 +30,7 @@ with DAG(
         namespace="airflow-spark-ns",
         application_name="{{ task_instance.xcom_pull(task_ids='titanic_process')['metadata']['name'] }}",
         kubernetes_conn_id="kubernetes_default",
+        attach_log=True,
     )
 
 titanic_process >> titanic_sensor
