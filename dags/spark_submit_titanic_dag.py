@@ -12,7 +12,7 @@ with DAG(
         'depends_on_past': False,
         'max_active_runs': 1,
     },
-    description='submit spark as sparkApplication on kubernetes',
+    description='submit spark as sparkApplication on K8s',
     schedule_interval=None,
     start_date=days_ago(1),
     catchup=False,
