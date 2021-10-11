@@ -16,7 +16,7 @@ with DAG(
     schedule_interval=None,
     start_date=days_ago(1),
     catchup=False,
-    tags=['spark', 'kubernetes', 'batch'],
+    tags=['spark', 'kubernetes', 'batch', 'delta-lake'],
 ) as dag:
     titanic_process = SparkKubernetesOperator(
         task_id='titanic_process',
