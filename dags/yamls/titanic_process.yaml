@@ -9,7 +9,7 @@ spec:
     - name: ivy
       emptyDir: {}
   sparkConf:
-    spark.jars.packages: "com.amazonaws:aws-java-sdk:1.7.4,org.apache.hadoop:hadoop-aws:2.7.4,io.delta:delta-core_2.12:0.8.0"
+    spark.jars.packages: "com.amazonaws:aws-java-sdk-bundle:1.11.874,org.apache.hadoop:hadoop-aws:3.2.0,io.delta:delta-core_2.12:0.8.0"
     spark.driver.extraJavaOptions: "-Dcom.amazonaws.services.s3.enableV4=true,-Divy.cache.dir=/tmp -Divy.home=/tmp"
     spark.executor.extraJavaOptions: "-Dcom.amazonaws.services.s3.enableV4=true"
     spark.hadoop.fs.s3a.endpoint: "s3.us-east-2.amazonaws.com"
@@ -19,19 +19,19 @@ spec:
   type: Python
   pythonVersion: "3"
   mode: cluster
-  image: "julianomuniz/spark-operator:v3.0.0-aws"
+  image: "julianomuniz/spark-operator:v3.1.1-hadoop3-aws"
   # imagePullPolicy -> Always, IfNotPresent, Never
   imagePullPolicy: Always
   mainApplicationFile: "s3a://jarvis-cluster-bucket/pyspark/job_processing.py"
   #arguments:
   #  - "table"
-  deps:
-    packages:
-      - io.delta:delta-core_2.12:0.8.0
+  #deps:
+  #  packages:
+  #    - io.delta:delta-core_2.12:0.8.0
   #  pyFiles:
   #    - local:///opt/spark/work-dir/test.py
   #    - "s3a://jarvis-cluster-bucket/pyspark/common.zip"
-  sparkVersion: "3.0.0"
+  sparkVersion: "3.1.1"
   restartPolicy:
     type: Never
     #type: OnFailure
@@ -51,7 +51,7 @@ spec:
     coreLimit: "1000m"
     memory: "1g"
     labels:
-      version: 3.0.0
+      version: 3.1.1
     serviceAccount: airflow-worker
     volumeMounts:
       - name: ivy
@@ -69,7 +69,7 @@ spec:
     coreLimit: "1000m"
     memory: "1g"
     labels:
-      version: 3.0.0
+      version: 3.1.1
     volumeMounts:
       - name: ivy
         mountPath: /tmp
