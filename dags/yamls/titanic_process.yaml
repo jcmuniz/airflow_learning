@@ -7,9 +7,11 @@ spec:
   timeToLiveSeconds: 120
   volumes:
     - name: ivy
-      emptyDir: {}
+      hostPath:
+        path: "/tmp"
+        type: Directory
   sparkConf:
-    spark.jars.packages: "com.amazonaws:aws-java-sdk-bundle:1.11.874,org.apache.hadoop:hadoop-aws:3.2.0,io.delta:delta-core_2.12:0.8.0"
+    spark.jars.packages: "com.amazonaws:aws-java-sdk-bundle:1.11.874,org.apache.hadoop:hadoop-aws:3.2.0,io.delta:delta-core_2.12:1.0.0"
     spark.driver.extraJavaOptions: "-Dcom.amazonaws.services.s3.enableV4=true,-Divy.cache.dir=/tmp -Divy.home=/tmp"
     spark.executor.extraJavaOptions: "-Dcom.amazonaws.services.s3.enableV4=true"
     spark.hadoop.fs.s3a.endpoint: "s3.us-east-2.amazonaws.com"
