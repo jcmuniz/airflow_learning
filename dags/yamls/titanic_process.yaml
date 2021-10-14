@@ -25,9 +25,9 @@ spec:
   mainApplicationFile: "s3a://jarvis-cluster-bucket/pyspark/job_processing.py"
   #arguments:
   #  - "table"
-  #deps:
-  #  packages:
-  #    - io.delta:delta-core_2.12:0.8.0
+  deps:
+    packages:
+      - io.delta:delta-core_2.12:0.8.0
   #  pyFiles:
   #    - local:///opt/spark/work-dir/test.py
   #    - "s3a://jarvis-cluster-bucket/pyspark/common.zip"
