@@ -6,10 +6,9 @@ metadata:
 spec:
   timeToLiveSeconds: 120
   volumes:
-    - name: ivy
-      hostPath:
-        path: "/tmp/ivy"
-        type: Directory
+    - name: "ivy"
+      persistentVolumeClaim:
+        claimName: ivy-pvc
   sparkConf:
     spark.jars.packages: "com.amazonaws:aws-java-sdk-bundle:1.11.874,org.apache.hadoop:hadoop-aws:3.2.0,io.delta:delta-core_2.12:1.0.0"
     spark.driver.extraJavaOptions: "-Dcom.amazonaws.services.s3.enableV4=true,-Divy.cache.dir=/tmp/ivy -Divy.home=/tmp/ivy"
