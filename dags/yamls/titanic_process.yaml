@@ -8,7 +8,7 @@ spec:
   volumes:
     - name: ivy
       hostPath:
-        path: "/tmp"
+        path: "/tmp/ivy"
         type: Directory
   sparkConf:
     spark.jars.packages: "com.amazonaws:aws-java-sdk-bundle:1.11.874,org.apache.hadoop:hadoop-aws:3.2.0,io.delta:delta-core_2.12:1.0.0"
@@ -57,7 +57,7 @@ spec:
     serviceAccount: airflow-worker
     volumeMounts:
       - name: ivy
-        mountPath: /tmp
+        mountPath: /tmp/ivy
   executor:
     envSecretKeyRefs:
       AWS_ACCESS_KEY_ID:
@@ -74,4 +74,4 @@ spec:
       version: 3.1.1
     volumeMounts:
       - name: ivy
-        mountPath: /tmp
+        mountPath: /tmp/ivy
