@@ -12,7 +12,7 @@ spec:
         type: Directory
   sparkConf:
     spark.jars.packages: "com.amazonaws:aws-java-sdk-bundle:1.11.874,org.apache.hadoop:hadoop-aws:3.2.0,io.delta:delta-core_2.12:1.0.0"
-    spark.driver.extraJavaOptions: "-Dcom.amazonaws.services.s3.enableV4=true,-Divy.cache.dir=/tmp -Divy.home=/tmp"
+    spark.driver.extraJavaOptions: "-Dcom.amazonaws.services.s3.enableV4=true,-Divy.cache.dir=/tmp/ivy -Divy.home=/tmp/ivy"
     spark.executor.extraJavaOptions: "-Dcom.amazonaws.services.s3.enableV4=true"
     spark.hadoop.fs.s3a.endpoint: "s3.us-east-2.amazonaws.com"
     spark.kubernetes.allocation.batch.size: "10"
