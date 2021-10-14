@@ -9,10 +9,10 @@ spec:
     - name: ivy
       emptyDir: {}
   sparkConf:
-    spark.jars.packages: "com.amazonaws:aws-java-sdk-bundle:1.11.874,org.apache.hadoop:hadoop-aws:3.2.0,io.delta:delta-core_2.12:0.8.0"
-    spark.driver.extraJavaOptions: "-Dcom.amazonaws.services.s3.enableV4=true,-Divy.cache.dir=/tmp -Divy.home=/tmp"
-    spark.executor.extraJavaOptions: "-Dcom.amazonaws.services.s3.enableV4=true"
-    spark.hadoop.fs.s3a.endpoint: "s3.us-east-2.amazonaws.com"
+    #spark.jars.packages: "com.amazonaws:aws-java-sdk-bundle:1.11.874,org.apache.hadoop:hadoop-aws:3.2.0,io.delta:delta-core_2.12:0.8.0"
+    #spark.driver.extraJavaOptions: "-Dcom.amazonaws.services.s3.enableV4=true,-Divy.cache.dir=/tmp -Divy.home=/tmp"
+    #spark.executor.extraJavaOptions: "-Dcom.amazonaws.services.s3.enableV4=true"
+    #spark.hadoop.fs.s3a.endpoint: "s3.us-east-2.amazonaws.com"
     spark.kubernetes.allocation.batch.size: "10"
   hadoopConf:
     fs.s3a.impl: org.apache.hadoop.fs.s3a.S3AFileSystem
@@ -25,9 +25,9 @@ spec:
   mainApplicationFile: "s3a://jarvis-cluster-bucket/pyspark/job_processing.py"
   #arguments:
   #  - "table"
-  deps:
-    packages:
-      - io.delta:delta-core_2.12:0.8.0
+  #deps:
+  #  packages:
+  #    - io.delta:delta-core_2.12:0.8.0
   #  pyFiles:
   #    - local:///opt/spark/work-dir/test.py
   #    - "s3a://jarvis-cluster-bucket/pyspark/common.zip"
